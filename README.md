@@ -111,15 +111,15 @@
 >>@return self
 
 ####option object
-"
-{
+
+    {
   easing: "linear",// ASPEN EASING
   delay: 400,//number(microsec)
   roundtrip: true, // false
   tracePath: undefined,// | 'arcCW 1.5(ratio)' | 'arcCCW 1.5' => use only 'moveTo', 'moveBy'
   effect: undefined// ASPEN EFFECT => use only 'changeState'
 }
-"
+
 
 ##ASPEN EASING
 'none', 'linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out', 'ease-out-in'
