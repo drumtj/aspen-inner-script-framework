@@ -75,6 +75,94 @@ var $ = (function(){
       return c;
     }
 
+    /*
+    easing : 'none', 'linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out', 'ease-out-in' -> default : 'linear'
+    duration : ms -> default : 400
+    roundtrip : boolean -> default : false
+    delay : ms -> default : 0
+    tracePath : 'arcCW 1.5', 'arcCCW 2.5' -> default : UNDEFINED
+    effect : undefined
+
+    $test.moveTo(33,44)
+    $test.moveTo(33,44, 400)
+    $test.moveTo(33,44, 400, {
+      delay:1000,
+      easing: "ease-in",
+      roundtrip: true,
+      tracePath: 'arrCW 1.5'
+    })
+    */
+    var dftOption = {
+      easing : 'linear',
+      delay : 0,
+      roundtrip : false,
+    }
+
+    function mergeOption(options){
+      var o = options || {};
+      for(var p in dftOption){
+        if(typeof o[p] === UNDEFINED) o[p] = dftOption[p];
+      }
+      return o;
+    }
+
+    function moveTo(x, y, duration, options){
+      if(typeof duration === UNDEFINED) duration = 400;
+      var o = mergeOption(options);
+      wgt.moveTo(this.id, x, y, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':''), o.tracePath); return this;
+    }
+
+    function moveBy(deltaX, deltaY, duration, options){
+      if(typeof duration === UNDEFINED) duration = 400;
+      var o = mergeOption(options);
+      wgt.moveBy(this.id, deltaX, deltaY, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':''), o.tracePath); return this;
+    }
+
+    function sizeTo(w, h, duration, options){
+      if(typeof duration === UNDEFINED) duration = 400;
+      var o = mergeOption(options);
+      wgt.sizeTo(this.id, w, h, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':'')); return this;
+    }
+
+    function sizeBy(deltaW, deltaH, duration, options){
+      if(typeof duration === UNDEFINED) duration = 400;
+      var o = mergeOption(options);
+      wgt.sizeBy(this.id, deltaW, deltaH, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':'')); return this;
+    }
+
+    function rotateTo(deg, duration, options){
+      if(typeof duration === UNDEFINED) duration = 400;
+      var o = mergeOption(options);
+      wgt.rotateTo(this.id, deg, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':'')); return this;
+    }
+
+    function opacityTo(opacity, duration, options){
+      if(typeof duration === UNDEFINED) duration = 400;
+      var o = mergeOption(options);
+      wgt.opacityTo(this.id, opacity, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':'')); return this;
+    }
+
+    /*
+    Effect
+    'cardUpLeft', 'cardUpRight', 'cardUpBottom', 'cardUpTop',
+    'dissolve', 'zoomIn', 'zoomOut', 'fall', 'newspaper',
+    'moveLeft', 'moveRight', 'moveBottom', 'moveTop',
+    'slideUpLeft', 'slideUpRight', 'slideUpBottom', 'slideUpTop',
+    'glueLeft', 'glueRight', 'glueBottom', 'glueTop',
+    'timeLagLeft', 'timeLagRight', 'timeLagBottom', 'timeLagTop',
+    'cubeLeft', 'cubeRight', 'cubeBottom', 'cubeTop',
+    'flipLeft', 'flipRight', 'flipBottom', 'flipTop'
+     */
+
+    //changeStage(state [,duration] [,options]);
+    function chageState(state, duration, options){
+      var o = mergeOption(options);
+      if( typeof duration !== UNDEFINED ){
+        duration = o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':'');
+      }
+      wgt.changeState(this.id, state, o.effect, duration); return this;
+    }
+
     var $ = function(n){
       return {
         id: (function(){
@@ -90,7 +178,14 @@ var $ = (function(){
         width: function(){ return width.apply(this, arguments); },
         height: function(){ return height.apply(this, arguments); },
         draggable: function(){ return draggable.apply(this, arguments); },
-        clone: function(){ return clone.apply(this, arguments); }
+        clone: function(){ return clone.apply(this, arguments); },
+        moveTo: function(){ return moveTo.apply(this, arguments); },
+        moveBy: function(){ return moveBy.apply(this, arguments); },
+        sizeTo: function(){ return sizeTo.apply(this, arguments); },
+        sizeBy: function(){ return sizeBy.apply(this, arguments); },
+        opacityTo: function(){ return opacityTo.apply(this, arguments); },
+        rotateTo: function(){ return rotateTo.apply(this, arguments); },
+        changeState: function(){ return changeState.apply(this, arguments); }
       }
     }
 
