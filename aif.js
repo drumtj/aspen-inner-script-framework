@@ -109,37 +109,37 @@ var $ = (function(){
     function moveTo(x, y, duration, options){
       if(typeof duration === UNDEFINED) duration = 400;
       var o = mergeOption(options);
-      wgt.moveTo(this.id, x, y, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':''), o.tracePath); return this;
+      wgt.moveTo(this.id, x, y, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':''), o.tracePath); return this;
     }
 
     function moveBy(deltaX, deltaY, duration, options){
       if(typeof duration === UNDEFINED) duration = 400;
       var o = mergeOption(options);
-      wgt.moveBy(this.id, deltaX, deltaY, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':''), o.tracePath); return this;
+      wgt.moveBy(this.id, deltaX, deltaY, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':''), o.tracePath); return this;
     }
 
     function sizeTo(w, h, duration, options){
       if(typeof duration === UNDEFINED) duration = 400;
       var o = mergeOption(options);
-      wgt.sizeTo(this.id, w, h, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':'')); return this;
+      wgt.sizeTo(this.id, w, h, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'')); return this;
     }
 
     function sizeBy(deltaW, deltaH, duration, options){
       if(typeof duration === UNDEFINED) duration = 400;
       var o = mergeOption(options);
-      wgt.sizeBy(this.id, deltaW, deltaH, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':'')); return this;
+      wgt.sizeBy(this.id, deltaW, deltaH, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'')); return this;
     }
 
     function rotateTo(deg, duration, options){
       if(typeof duration === UNDEFINED) duration = 400;
       var o = mergeOption(options);
-      wgt.rotateTo(this.id, deg, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':'')); return this;
+      wgt.rotateTo(this.id, deg, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'')); return this;
     }
 
     function opacityTo(opacity, duration, options){
       if(typeof duration === UNDEFINED) duration = 400;
       var o = mergeOption(options);
-      wgt.opacityTo(this.id, opacity, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':'')); return this;
+      wgt.opacityTo(this.id, opacity, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'')); return this;
     }
 
     /*
@@ -158,7 +158,7 @@ var $ = (function(){
     function chageState(state, duration, options){
       var o = mergeOption(options);
       if( typeof duration !== UNDEFINED ){
-        duration = o.easing+' '+duration+'ms' + (o.roundtrip?' roundtrip':'');
+        duration = o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'');
       }
       wgt.changeState(this.id, state, o.effect, duration); return this;
     }
