@@ -111,7 +111,7 @@
 >>@return self
 
 
-option object{
+####option object{
   easing: ASPEN EASING
   delay: number(microsec),
   roundtrip: true|false,
@@ -119,10 +119,10 @@ option object{
   effect: ASPEN EFFECT => use only 'changeState'
 }
 
-ASPEN EASING
+##ASPEN EASING
 'none', 'linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out', 'ease-out-in'
 
-ASPEN EFFECT
+##ASPEN EFFECT
 'cardUpLeft', 'cardUpRight', 'cardUpBottom', 'cardUpTop',
 'dissolve', 'zoomIn', 'zoomOut', 'fall', 'newspaper',
 'moveLeft', 'moveRight', 'moveBottom', 'moveTop',
