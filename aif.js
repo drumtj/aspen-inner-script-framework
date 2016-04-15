@@ -1,4 +1,5 @@
 var $ = (function(){
+    var VERSION = '0.1';
     var UNDEFINED = 'undefined';
     function attr(n, v){
       if( typeof v === UNDEFINED ){
@@ -50,19 +51,51 @@ var $ = (function(){
       }
     }
 
+    /*
+    $test.draggable();//drag start
+    $test.draggable({x:true});// for axis X
+    $test.draggable({y:true});// for axis Y
+    $test.draggable(false);// drag disabled
+     */
+    function draggable(){
+      if(arguments.length == 0){
+        this.attr('dragX', true).attr('dragY', true);
+      }else if(arguments[0] === false){
+        this.attr('dragX', false).attr('dragY', false);
+      }else{
+        if( typeof arguments[0].x === "boolean" ) this.attr('dragX', arguments[0].x);
+        if( typeof arguments[0].y === "boolean" ) this.attr('dragX', arguments[0].y);
+      }
+      return this;
+    }
+
+    function clone(){
+      var c = $("__clone__");
+      c.id = wgt.clone(this.id);
+      return c;
+    }
+
     var $ = function(n){
       return {
-        id: getWidget(n),
+        id: (function(){
+          if( n == "__clone__" ) return null;
+          var wgid = getWidget(n);
+          if( typeof wgid === "string" ) return wgid;
+          else return wgid[0];
+        })(),
         attr: function(){ return attr.apply(this, arguments); },
         getRect: function(){ return getRect.apply(this, arguments); },
         data: function(){ return data.apply(this, arguments); },
         position: function(){ return position.apply(this, arguments); },
         width: function(){ return width.apply(this, arguments); },
-        height: function(){ return height.apply(this, arguments); }
+        height: function(){ return height.apply(this, arguments); },
+        draggable: function(){ return draggable.apply(this, arguments); },
+        clone: function(){ return clone.apply(this, arguments); }
       }
     }
 
     $.id = "global";
+    $.version = VERSION;
     $.data = function(){ return data.apply(this, arguments); }
 
     return $;
