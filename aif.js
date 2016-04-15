@@ -11,24 +11,28 @@ var $ = (function(){
     }
 
     function getRect(){
-      return [this.attr('x'),this.attr('y'),this.attr('w'),this.attr('h')];
+      return {x:this.attr('x'), y:this.attr('y'), width:this.attr('w'), height:this.attr('h')};
     }
 
     function data(k, v){
-        if( typeof v === UNDEFINED ){
-            var d = get(this.id+'_'+k);
-            if( d === '') return null;
-            return JSON.parse(d);
-        }else{
-            set(this.id+'_'+k, JSON.stringify(v));
-            return this;
-        }
+      if( typeof v === UNDEFINED ){
+          var d = get(this.id+'_'+k);
+          if( d === '') return null;
+          return JSON.parse(d);
+      }else{
+          set(this.id+'_'+k, JSON.stringify(v));
+          return this;
+      }
     }
 
     function position(p){
-      for(var o in p){
-          if(o == 'x' || o == 'left') this.attr('x', p[o]);
-          else if(o == 'y' || o == 'top') this.attr('y', p[o]);
+      if( typeof p === UNDEFINED ){
+        return {x:this.attr('x'), y:this.attr('y')};
+      }else{
+        for(var o in p){
+            if(o == 'x' || o == 'left') this.attr('x', p[o]);
+            else if(o == 'y' || o == 'top') this.attr('y', p[o]);
+        }
       }
       return this;
     }
