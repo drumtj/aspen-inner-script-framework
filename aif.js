@@ -1,5 +1,5 @@
 var $ = (function(){
-    this["VERSION"] = '0.3';
+    this["VERSION"] = '0.4';
     var UNDEFINED = 'undefined';
     function attr(n, v){
       if( typeof v === UNDEFINED ){
@@ -121,7 +121,20 @@ var $ = (function(){
       return o;
     }
 
-    function moveTo(x, y, duration, options){
+    //function moveTo(x, y, duration, options){
+    function moveTo(){
+      var x,y,duration,options;
+      if( typeof arguments[0] === "object" ){
+        x = arguments[0].x;
+        y = arguments[0].y;
+        duration = arguments[1];
+        options = arguments[2];
+      }else{
+        x = arguments[1];
+        y = arguments[2];
+        duration = arguments[3];
+        options = arguments[4];
+      }
       if(typeof duration === UNDEFINED) duration = 400;
       var o = mergeOption(options);
       wgt.moveTo(this.id, x, y, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':''), o.tracePath); return this;
@@ -159,7 +172,7 @@ var $ = (function(){
 
     //function lineTo(sp,ep, duration, options){
     //function lineTo(sx,sy,ex,ey, duration, options){
-    function lineTo(sx,sy,ex,ey, duration, options){
+    function lineTo(){
       var sx, sy, ex, ey, duration, options;
       if( typeof arguments[0] === "object" ){
         sx = arguments[0].x;
@@ -179,6 +192,12 @@ var $ = (function(){
       if(typeof duration === UNDEFINED) duration = 400;
       var o = mergeOption(options);
       wgt.lineTo(this.id, sx,sy,ex,ey, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'')); return this;
+    }
+
+    function zoomTo(scx, scy, duration, options){
+      if(typeof duration === UNDEFINED) duration = 400;
+      var o = mergeOption(options);
+      wgt.zoomTo(this.id, scx*100+"%", scy*100+"%", o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'')); return this;
     }
 
     /*
@@ -226,7 +245,8 @@ var $ = (function(){
         rotateTo: function(){ return rotateTo.apply(this, arguments); },
         changeState: function(){ return changeState.apply(this, arguments); },
         getCenterPosition: function(){ return getCenterPosition.apply(this, arguments); },
-        lineTo: function(){ return lineTo.apply(this, arguments); }
+        lineTo: function(){ return lineTo.apply(this, arguments); },
+        zoomTo: function(){ return zoomTo.apply(this, arguments); }
       }
     }
 
