@@ -1,5 +1,5 @@
 var $ = (function(){
-    var VERSION = '0.1';
+    var VERSION = '0.2';
     var UNDEFINED = 'undefined';
     function attr(n, v){
       if( typeof v === UNDEFINED ){
@@ -35,6 +35,13 @@ var $ = (function(){
         }
       }
       return this;
+    }
+
+    function getCenterPosition(){
+      return {
+        x: this.attr('x') + this.attr('w') * 0.5,
+        y: this.attr('y') + this.attr('h') * 0.5
+      }
     }
 
     function height(v){
@@ -76,6 +83,10 @@ var $ = (function(){
     function clone(){
       var c = $("__clone__");
       c.id = wgt.clone(this.id);
+      var label = wgt.get(c.id, "label");
+      if( label && label !== "" ){
+        wgt.set(c.id, "label", label + "_clone" + (Date.now()%1000000));
+      }
       return c;
     }
 
@@ -189,7 +200,8 @@ var $ = (function(){
         sizeBy: function(){ return sizeBy.apply(this, arguments); },
         opacityTo: function(){ return opacityTo.apply(this, arguments); },
         rotateTo: function(){ return rotateTo.apply(this, arguments); },
-        changeState: function(){ return changeState.apply(this, arguments); }
+        changeState: function(){ return changeState.apply(this, arguments); },
+        getCenterPosition: function(){ return getCenterPosition.apply(this, arguments); }
       }
     }
 
