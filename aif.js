@@ -1,5 +1,5 @@
 var $ = (function(){
-    var VERSION = '0.2';
+    this["VERSION"] = '0.3';
     var UNDEFINED = 'undefined';
     function attr(n, v){
       if( typeof v === UNDEFINED ){
@@ -157,6 +157,30 @@ var $ = (function(){
       wgt.opacityTo(this.id, opacity, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'')); return this;
     }
 
+    //function lineTo(sp,ep, duration, options){
+    //function lineTo(sx,sy,ex,ey, duration, options){
+    function lineTo(sx,sy,ex,ey, duration, options){
+      var sx, sy, ex, ey, duration, options;
+      if( typeof arguments[0] === "object" ){
+        sx = arguments[0].x;
+        sy = arguments[0].y;
+        ex = arguments[1].x;
+        ey = arguments[1].y;
+        duration = arguments[2];
+        options = arguments[3];
+      }else{
+        sx = arguments[0];
+        sy = arguments[1];
+        ex = arguments[2];
+        ey = arguments[3];
+        duration = arguments[4];
+        options = arguments[5];
+      }
+      if(typeof duration === UNDEFINED) duration = 400;
+      var o = mergeOption(options);
+      wgt.lineTo(this.id, sx,sy,ex,ey, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'')); return this;
+    }
+
     /*
     Effect
     'cardUpLeft', 'cardUpRight', 'cardUpBottom', 'cardUpTop',
@@ -201,7 +225,8 @@ var $ = (function(){
         opacityTo: function(){ return opacityTo.apply(this, arguments); },
         rotateTo: function(){ return rotateTo.apply(this, arguments); },
         changeState: function(){ return changeState.apply(this, arguments); },
-        getCenterPosition: function(){ return getCenterPosition.apply(this, arguments); }
+        getCenterPosition: function(){ return getCenterPosition.apply(this, arguments); },
+        lineTo: function(){ return lineTo.apply(this, arguments); }
       }
     }
 
