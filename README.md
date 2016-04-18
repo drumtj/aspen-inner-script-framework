@@ -34,6 +34,13 @@
 >>@return position object or self
 
 
+>getCenterPosition()
+
+>>@params
+
+>>@return position object {x,y} or self
+
+
 >width([value])
 
 >>@params (number);
@@ -62,7 +69,11 @@
 >>@return clone $object
 
 
+>moveTo({x, y} [, duration] [,options])
+
 >moveTo(x, y [, duration] [,options])
+
+>>@params ({x:number, y:number}, number(microsec), option object)
 
 >>@params (number, number, number(microsec), option object)
 
@@ -109,6 +120,26 @@
 >>@params (number, number(microsec), option object)
 
 >>@return self
+
+
+>lineTo({x, y}, {x, y} [, duration] [,options])
+
+>lineTo(x1, y1, x2, y2 [, duration] [,options])
+
+>>@params ({x:number, y:number}, {x:number, y:number}, number(microsec), option object)
+
+>>@params (number, number, number, number, number(microsec), option object)
+
+>>@return self
+
+
+>zoomTo(scx, scy, [, duration] [,options])
+
+>>@params (number, number, number(microsec), option object)
+
+>>@return self
+
+
 
 ####option object
 
