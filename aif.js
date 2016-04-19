@@ -1,5 +1,5 @@
 var $ = (function(){
-    this["VERSION"] = '0.5';
+    this["VERSION"] = '0.6';
     var UNDEFINED = 'undefined';
     function attr(n, v){
       if( typeof v === UNDEFINED ){
@@ -230,6 +230,12 @@ var $ = (function(){
       return (position.x >= rect.x && position.x <= rect.x + rect.width && position.y >= rect.y && position.y <= rect.y + rect.height);
     }
 
+    function visible(bool){
+      if( typeof bool === UNDEFINED ) return this.attr("visibility");
+      this.attr("visibility", bool?"visible":"hidden");
+      return this;
+    }
+
     var $ = function(n){
       return {
         id: (function(){
@@ -255,7 +261,8 @@ var $ = (function(){
         changeState: function(){ return changeState.apply(this, arguments); },
         getCenterPosition: function(){ return getCenterPosition.apply(this, arguments); },
         lineTo: function(){ return lineTo.apply(this, arguments); },
-        zoomTo: function(){ return zoomTo.apply(this, arguments); }
+        zoomTo: function(){ return zoomTo.apply(this, arguments); },
+        visible: function(){ return visible.apply(this, arguments); }
       }
     }
 
