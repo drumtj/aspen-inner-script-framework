@@ -71,6 +71,13 @@
 >>@return clone $object
 
 
+>visible([true|false])
+
+>>@params undefined or boolean
+
+>>@return self or visibility
+
+
 >moveTo({x, y} [, duration] [,options])
 
 >moveTo(x, y [, duration] [,options])
