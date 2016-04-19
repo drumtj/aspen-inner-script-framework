@@ -1,5 +1,5 @@
 var $ = (function(){
-    this["VERSION"] = '0.6';
+    this["VERSION"] = '0.7';
     var UNDEFINED = 'undefined';
     function attr(n, v){
       if( typeof v === UNDEFINED ){
@@ -135,10 +135,10 @@ var $ = (function(){
         duration = arguments[1];
         options = arguments[2];
       }else{
-        x = arguments[1];
-        y = arguments[2];
-        duration = arguments[3];
-        options = arguments[4];
+        x = arguments[0];
+        y = arguments[1];
+        duration = arguments[2];
+        options = arguments[3];
       }
       if(typeof duration === UNDEFINED) duration = 400;
       var o = mergeOption(options);
