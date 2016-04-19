@@ -218,7 +218,7 @@ var $ = (function(){
      */
 
     //changeStage(state [,duration] [,options]);
-    function chageState(state, duration, options){
+    function changeState(state, duration, options){
       var o = mergeOption(options);
       if( typeof duration !== UNDEFINED ){
         duration = o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'');
