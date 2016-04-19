@@ -1,5 +1,5 @@
 var $ = (function(){
-    this["VERSION"] = '0.4';
+    this["VERSION"] = '0.5';
     var UNDEFINED = 'undefined';
     function attr(n, v){
       if( typeof v === UNDEFINED ){
@@ -11,7 +11,12 @@ var $ = (function(){
     }
 
     function getRect(){
-      return {x:this.attr('x'), y:this.attr('y'), width:this.attr('w'), height:this.attr('h')};
+      return {
+        x:this.attr('x'), y:this.attr('y'), width:this.attr('w'), height:this.attr('h'),
+        contains: function(position){
+          return rectContains.call(null, this, position);
+        }
+      };
     }
 
     function data(k, v){
@@ -219,6 +224,10 @@ var $ = (function(){
         duration = o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'');
       }
       wgt.changeState(this.id, state, o.effect, duration); return this;
+    }
+
+    function rectContains(rect, position){
+      return (position.x >= rect.x && position.x <= rect.x + rect.width && position.y >= rect.y && position.y <= rect.y + rect.height);
     }
 
     var $ = function(n){
