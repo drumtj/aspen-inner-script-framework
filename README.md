@@ -15,7 +15,9 @@
 
 >>@params 
 
->>@return rect object {x:, y:, width:, height:}
+>>@return rect object {x:number, y:number, width:number, height:number, contains:function}
+
+>>>contains({x:number, y:number});
 
 
 >data(key [, value])
