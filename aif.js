@@ -1,11 +1,11 @@
 var $ = (function(){
-    this["VERSION"] = '0.7';
+    this["VERSION"] = '0.8';
     var UNDEFINED = 'undefined';
-    function attr(n, v){
+    function attr(n, v, wait){
       if( typeof v === UNDEFINED ){
         return wgt.get(this.id,n);
       }else{
-        wgt.set(this.id,n,v);
+        wgt.set(this.id,n,v,wait);
         return this;
       }
     }
