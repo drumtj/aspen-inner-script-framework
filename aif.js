@@ -254,13 +254,16 @@ var $ = (function(){
     }
     */
 
-    var $ = function(n){
+    var $ = function(n, opt){
       var id, list, $t, wgid;
       if( n == "__clone__" ){
         id = null;
       } else if( n == null ) {
         //pass
-        id = null;
+        if( opt && opt.id ){
+          id = opt.id;
+        }else id = null;
+        
       } else if( n ) {
         if( n.indexOf(",") > -1 ){
           var nl = n.split(",");
