@@ -1,5 +1,5 @@
 var $ = (function(){
-    this["VERSION"] = '0.9';
+    this["VERSION"] = '0.10';
     var UNDEFINED = 'undefined';
     function attr(n, v, wait){
       if( typeof v === UNDEFINED ){
@@ -85,7 +85,9 @@ var $ = (function(){
       return this;
     }
 
-    function clone(){
+    //clone(parentContainer?, layerName?)
+    function clone(parentContainer, layerName){
+      /*
       var c = $("__clone__");
       c.id = wgt.clone(this.id);
       var label = wgt.get(c.id, "label");
@@ -93,6 +95,13 @@ var $ = (function(){
         wgt.set(c.id, "label", label + "_clone" + (Date.now()%1000000));
       }
       return c;
+      */
+      var $c = $(null, {id:wgt.clone(this.id, (typeof parentContainer === "string" ? parentContainer : parentContainer.id), layerName)});
+      var label = wgt.get($c.id, "label");
+      if( label && label !== "" ){
+        wgt.set($c.id, "label", label + "_clone" + (Date.now()%1000000));
+      }
+      return $c;
     }
 
     /*
@@ -256,9 +265,11 @@ var $ = (function(){
 
     var $ = function(n, opt){
       var id, list, wgid;
+      /*
       if( n == "__clone__" ){
         id = null;
-      } else if( n == null ) {
+      } else */
+      if( n == null ) {
         //pass
         if( opt && opt.id ){
           id = opt.id;
