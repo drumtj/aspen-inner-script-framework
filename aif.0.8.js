@@ -1,5 +1,5 @@
 var $ = (function(){
-    this["VERSION"] = '0.9';
+    this["VERSION"] = '0.8';
     var UNDEFINED = 'undefined';
     function attr(n, v, wait){
       if( typeof v === UNDEFINED ){
@@ -236,69 +236,14 @@ var $ = (function(){
       return this;
     }
 
-    function toString(){
-      if(this.list.length){
-        var a = [];
-        for(var o in this.list){
-          a.push( this.list[o].id );
-        }
-        return a.join();
-      }else{
-        return this.id;
-      }
-    }
-
-    /*
-    function each(fn){
-
-    }
-    */
-
     var $ = function(n){
-      var id, list, $t, wgid;
-      if( n == "__clone__" ){
-        id = null;
-      } else if( n == null ) {
-        //pass
-        id = null;
-      } else if( n ) {
-        if( n.indexOf(",") > -1 ){
-          var nl = n.split(",");
-          for(var j in nl){
-            nl[j] = $(nl[j].replace(/^ +/,"").replace(/ +$/,""));
-          }
-          id = null;
-          list = nl;
-        } else {
-          wgid = getWidget(n);
-          if( wgid.indexOf(",") == -1 ){
-            id = wgid;
-            list = [wgid];
-          } else {
-            //같은이름이 있어서 widgetId가 배열로 반환된 경우
-            wgid = wgid.split(",");
-            for(var o in wgid){
-              $t = $(null);
-              $t.id = wgid[o];
-              wgid[o] = $t;
-            }
-            id = null;
-            list = wgid;
-          }
-        }
-      }
-
       return {
-        /*
         id: (function(){
           if( n == "__clone__" ) return null;
           var wgid = getWidget(n);
           if( typeof wgid === "string" ) return wgid;
           else return wgid[0];
         })(),
-        */
-        id: id,
-        list: list,
         attr: function(){ return attr.apply(this, arguments); },
         getRect: function(){ return getRect.apply(this, arguments); },
         data: function(){ return data.apply(this, arguments); },
@@ -317,8 +262,7 @@ var $ = (function(){
         getCenterPosition: function(){ return getCenterPosition.apply(this, arguments); },
         lineTo: function(){ return lineTo.apply(this, arguments); },
         zoomTo: function(){ return zoomTo.apply(this, arguments); },
-        visible: function(){ return visible.apply(this, arguments); },
-        toString: function(){ return toString.call(this); }
+        visible: function(){ return visible.apply(this, arguments); }
       }
     }
 
