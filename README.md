@@ -1,6 +1,28 @@
 # aspen-inner-script-framework
 아스펜 내부 스크립팅시 사용함. jQuery와 비슷하게 쓸수있게 하는게 목표
 
+##Constructor
+
+>$(widgetLabel)
+
+>>@params (string)
+
+>>ex) $("test1")
+
+>>ex) $("test1, test2")
+
+
+##Properties
+
+>id
+
+>>ASPEN widget ID
+
+>list
+
+>>같은 이름의 위젯이 여럿이거나, 여러 위젯을 잡을 ","로 구분된 셀렉터라면 여러 $객체들이 list에 들어간다.
+
+
 
 ##Methods
 
