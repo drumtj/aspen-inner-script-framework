@@ -3,13 +3,15 @@
 
 ##Constructor
 
->$(widgetLabel)
+>$(widgetLabel [, options])
 
->>@params (string)
+>>@params (string [, object])
 
 >>ex) $("test1")
 
 >>ex) $("test1, test2")
+
+>>ex) $(null, {id:"testid"})  --> 라벨을 모르고 id로 객체를 만들 때 사용
 
 
 ##Properties
