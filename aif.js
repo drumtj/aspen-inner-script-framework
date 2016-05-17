@@ -255,7 +255,7 @@ var $ = (function(){
     */
 
     var $ = function(n, opt){
-      var id, list, $t, wgid;
+      var id, list, wgid;
       if( n == "__clone__" ){
         id = null;
       } else if( n == null ) {
@@ -263,7 +263,7 @@ var $ = (function(){
         if( opt && opt.id ){
           id = opt.id;
         }else id = null;
-        
+
       } else if( n ) {
         if( n.indexOf(",") > -1 ){
           var nl = n.split(",");
@@ -281,9 +281,7 @@ var $ = (function(){
             //같은이름이 있어서 widgetId가 배열로 반환된 경우
             wgid = wgid.split(",");
             for(var o in wgid){
-              $t = $(null);
-              $t.id = wgid[o];
-              wgid[o] = $t;
+              wgid[o] = $(null, {id:wgid[o]});
             }
             id = null;
             list = wgid;
