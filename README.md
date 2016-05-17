@@ -88,11 +88,13 @@
 >>@return self
 
 
->clone()
+>clone([parent$orID, layerName])
 
->>@params
+>>@params($|string, string)
 
 >>@return clone $object
+
+>>복제 시 특정 MultiLayer에 자식으로 넣을 수 있음
 
 
 >visible([true|false])
