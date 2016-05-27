@@ -1,5 +1,5 @@
 var $ = (function(){
-    this["VERSION"] = '0.10';
+    this["VERSION"] = '0.11';
     var UNDEFINED = 'undefined';
     function attr(n, v, wait){
       if( typeof v === UNDEFINED ){
@@ -96,7 +96,7 @@ var $ = (function(){
       }
       return c;
       */
-      var $c = $(null, {id:wgt.clone(this.id, (typeof parentContainer === "string" ? parentContainer : parentContainer.id), layerName)});
+      var $c = $(null, {id:wgt.clone(this.id, ((typeof parentContainer === "string" || typeof parentContainer === UNDEFINED) ? parentContainer : parentContainer.id), layerName)});
       var label = wgt.get($c.id, "label");
       if( label && label !== "" ){
         wgt.set($c.id, "label", label + "_clone" + (Date.now()%1000000));
@@ -166,10 +166,10 @@ var $ = (function(){
       wgt.sizeTo(this.id, w, h, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'')); return this;
     }
 
-    function sizeBy(deltaW, deltaH, duration, options){
+    function sizeBy(deltaW, deltaH, fromCenter, duration, options){
       if(typeof duration === UNDEFINED) duration = 400;
       var o = mergeOption(options);
-      wgt.sizeBy(this.id, deltaW, deltaH, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'')); return this;
+      wgt.sizeBy(this.id, deltaW, deltaH, fromCenter, o.delay, o.easing+' '+duration+'ms' + (o.roundtrip?' roundTrip':'')); return this;
     }
 
     function rotateTo(deg, duration, options){
@@ -264,7 +264,7 @@ var $ = (function(){
     */
 
     var $ = function(n, opt){
-      var id, list, wgid;
+      var id, list=[], wgid;
       /*
       if( n == "__clone__" ){
         id = null;
@@ -273,7 +273,10 @@ var $ = (function(){
         //pass
         if( opt && opt.id ){
           id = opt.id;
-        }else id = null;
+          list = [id];
+        }else{
+          id = null;
+        }
 
       } else if( n ) {
         if( n.indexOf(",") > -1 ){
