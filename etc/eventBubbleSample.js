@@ -1,13 +1,23 @@
+//#160602
 ////////////////////////////////////base//////////////////////////////////////////////////
 
 var UNDEFINED = "undefined";
 
 function $(name, id){
     return {
-        id: (id ? id : getWidget(name)),
+        id: (id ? id : (name ? getWidget(name) : null)),
         attr: attr
     }
 }
+
+function trace(obj){
+    if( typeof obj === "object" ){
+        consoleLog(JSON.stringify(obj))
+    }else{
+        consoleLog(obj)
+    }
+}
+
 
 var event = {
     type: getParam(2),
@@ -15,6 +25,7 @@ var event = {
     $target: $(null, getParam(3)),
     param: getParam(1)
 }
+
 
 switch( event.type ){
     case "Tap": onTap(); break;
@@ -26,12 +37,12 @@ switch( event.type ){
 }
 
 
-function isUf(target){
+function isUndef(target){
     return typeof target === UNDEFINED;
 }
 
 function attr(attrName, value){
-    if( isUf(value) ){
+    if( isUndef(value) ){
         return wgt.get(this.id, attrName);
     }else{
         wgt.set(this.id, attrName, value);
@@ -68,7 +79,7 @@ function onMenuChange(){
 }
 
 function onMusicBeat(){
-
+  //setSync();
 }
 
 function onMusicNote(){
@@ -110,3 +121,25 @@ function setLine(linesName, linePrefix, param, positions){
         wgt.set(id, "visibility", (param.indexOf("Show") > -1 ? "visible" : "hidden"));
     }
 }
+/*
+function setSync(){
+  var l, msnames = JSON.parse(get("msnames"));
+  if( (l = msnames[ wgt.get(event.targetId, "label") ]) >= 0 ){
+      //consoleLog( param );
+      var psp = event.param.split("/");
+      //박자
+      var i = parseInt(psp[0])-1;
+      //절
+      var j = parseInt(psp[1])-1;
+      var idss;
+      idss = JSON.parse(get("idss"));
+      if( idss && idss[l][j][i] && idss[l][j][i] !== "" ){
+          if( event.param.indexOf("Off") > -1 ){
+              wgt.changeState(idss[l][j][i], "Off");
+          }else{
+              wgt.changeState(idss[l][j][i], "On");
+          }
+      }
+  }
+}
+*/
