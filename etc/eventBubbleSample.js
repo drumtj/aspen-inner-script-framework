@@ -1,4 +1,4 @@
-//#160602
+//#160614
 ////////////////////////////////////base//////////////////////////////////////////////////
 
 var UNDEFINED = "undefined";
@@ -6,16 +6,29 @@ var UNDEFINED = "undefined";
 function $(name, id){
     return {
         id: (id ? id : (name ? getWidget(name) : null)),
-        attr: attr
+        attr: __attr,
+        data: __data
     }
 }
 
-function trace(obj){
-    if( typeof obj === "object" ){
-        consoleLog(JSON.stringify(obj))
-    }else{
-        consoleLog(obj)
+function _trace(arr){
+    var r = []
+    for(var o in arr){
+        if( typeof arr[o] === "object" ){
+            r.push(JSON.stringify(arr[o]));
+        }else{
+            r.push(arr[o]);
+        }
     }
+    consoleLog(r.join(" "));
+}
+
+function trace(){
+    var arr = [];
+    for(var i=0; i<arguments.length; i++){
+        arr[i] = arguments[i];
+    }
+    _trace.call(this, arr);
 }
 
 
@@ -41,11 +54,25 @@ function isUndef(target){
     return typeof target === UNDEFINED;
 }
 
-function attr(attrName, value){
+function __attr(attrName, value){
     if( isUndef(value) ){
         return wgt.get(this.id, attrName);
     }else{
         wgt.set(this.id, attrName, value);
+        return this;
+    }
+}
+
+function __data(k, v){
+    var d = file.get("__DATA__") || {};
+    if( typeof d[this.id] === UNDEFINED ){
+        d[this.id] = {};
+    }
+    if( typeof v === UNDEFINED ){
+        return d[this.id][k];
+    }else{
+        d[this.id][k] = v;
+        file.set("__DATA__", d);
         return this;
     }
 }

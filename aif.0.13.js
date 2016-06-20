@@ -1,5 +1,5 @@
 var $ = (function(){
-    this["VERSION"] = '0.12';
+    this["VERSION"] = '0.13';
     if( window.apn$ ) return window.apn$;
 
     var UNDEFINED = 'undefined';
@@ -34,14 +34,18 @@ var $ = (function(){
     }
     */
    //#160602 file domain추가로 기능개선 반영
+   //#160614 참조값 사용 기능개선
    function data(k, v){
+     var d = file.get("__DATA__") || {};
+     if( typeof d[this.id] === UNDEFINED ){
+       d[this.id] = {};
+     }
      if( typeof v === UNDEFINED ){
-         var d = file.get(this.id+'_'+k);
-         if( d === '') return null;
-         return d;
+       return d[this.id][k];
      }else{
-         file.set(this.id+'_'+k, v);
-         return this;
+       d[this.id][k] = v;
+       file.set("__DATA__", d);
+       return this;
      }
    }
 
@@ -90,12 +94,15 @@ var $ = (function(){
      */
     function draggable(){
       if(arguments.length == 0){
-        this.attr('dragX', true).attr('dragY', true);
+        this.attr('dragAll', true);
       }else if(arguments[0] === false){
-        this.attr('dragY', false).attr('dragY', false);
+        this.attr('dragAll', false);
       }else{
-        if( typeof arguments[0].x === "boolean" ) this.attr('dragX', arguments[0].x);
-        if( typeof arguments[0].y === "boolean" ) this.attr('dragY', arguments[0].y);
+        if( arguments[0].x === arguments[0].y ) this.attr('dragAll', arguments[0].x);
+        else {
+          this.attr('dragX', arguments[0].x);
+          this.attr('dragY', arguments[0].y);
+        }
       }
       return this;
     }
@@ -116,6 +123,10 @@ var $ = (function(){
       if( label && label !== "" ){
         wgt.set($c.id, "label", label + "_clone" + (Date.now()%1000000));
       }
+      $c.list = this.list;
+      var d = file.get("__DATA__") || {};
+      d[$c.id] = JSON.parse(JSON.stringify(d[this.id]));
+      file.set("__DATA__", d);
       return $c;
     }
 
@@ -148,6 +159,23 @@ var $ = (function(){
         if(typeof o[p] === UNDEFINED) o[p] = dftOption[p];
       }
       return o;
+    }
+
+    //$target, duration, options
+    function moveToTarget($target, duration, options){
+      if( !$target ){
+        consoleLog("[moveToTarget] targetId is " + (typeof $target));
+        return this;
+      }
+
+      var pos;
+      if( options && options.center ){
+        pos = $target.getCenterPosition();
+      }else{
+        pos = $target.position();
+      }
+      this.moveTo(pos, duration, options);
+      return this;
     }
 
     //function moveTo(x, y, duration, options){
@@ -272,13 +300,38 @@ var $ = (function(){
       }
     }
 
+    function isUndef(target){
+        return typeof target === UNDEFINED;
+    }
+
+    function trace(){
+        var arr = [], r = [];
+        for(var i=0; i<arguments.length; i++){
+            if( typeof arguments[i] === "object" ){
+                r.push(JSON.stringify(arguments[i]));
+            }else{
+                r.push(arguments[i]);
+            }
+        }
+        consoleLog(r.join(" "));
+    }
+
+    function trim(str){
+      return str.replace(/^ +/,"").replace(/ +$/,"");
+    }
+
     /*
     function each(fn){
 
     }
     */
 
+    var cache = {};
+
     var $ = function(n, opt){
+
+      if( typeof n === "object" && n && n["getCenterPosition"] ) return n;
+
       var id, list=[], wgid;
       /*
       if( n == "__clone__" ){
@@ -288,7 +341,7 @@ var $ = (function(){
         //pass
         if( opt && opt.id ){
           id = opt.id;
-          list = [id];
+          list = "self";
         }else{
           id = null;
         }
@@ -305,7 +358,7 @@ var $ = (function(){
           wgid = getWidget(n);
           if( wgid.indexOf(",") == -1 ){
             id = wgid;
-            list = [wgid];
+            list = "self";
           } else {
             //같은이름이 있어서 widgetId가 배열로 반환된 경우
             wgid = wgid.split(",");
@@ -318,7 +371,9 @@ var $ = (function(){
         }
       }
 
-      return {
+      if( id && cache[id] ) return cache[id];
+
+      var r = {
         /*
         id: (function(){
           if( n == "__clone__" ) return null;
@@ -328,7 +383,6 @@ var $ = (function(){
         })(),
         */
         id: id,
-        list: list,
         attr: function(){ return attr.apply(this, arguments); },
         getRect: function(){ return getRect.apply(this, arguments); },
         data: function(){ return data.apply(this, arguments); },
@@ -348,14 +402,27 @@ var $ = (function(){
         lineTo: function(){ return lineTo.apply(this, arguments); },
         zoomTo: function(){ return zoomTo.apply(this, arguments); },
         visible: function(){ return visible.apply(this, arguments); },
-        toString: function(){ return toString.call(this); }
+        toString: function(){ return toString.call(this); },
+        moveToTarget: function(){ return moveToTarget.apply(this, arguments); }
+      };
+
+      cache[id] = r;
+
+      if( list === "self" ) {
+        r.list = [r];
+      }else{
+        r.list = list;
       }
+
+      return r;
     }
 
     $.id = "global";
     $.version = VERSION;
     $.data = function(){ return data.apply(this, arguments); }
-
+    $.isUndef = function(){ return isUndef.apply(this, arguments); };
+    $.trace = function(){ return trace.apply(this, arguments); };
+    $.trim = function(){ return trim.apply(this, arguments); };
     window.apn$ = $;
 
     return $;
