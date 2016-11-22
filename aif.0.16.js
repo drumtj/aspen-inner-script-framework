@@ -157,7 +157,7 @@ var $ = (function(){
     var dftOption = {
       easing : 'linear',
       delay : 0,
-      roundtrip : false,
+      roundtrip : false
     }
 
     function mergeOption(options){
