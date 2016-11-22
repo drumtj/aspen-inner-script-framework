@@ -1,5 +1,5 @@
 var $ = (function(){
-    this["VERSION"] = '0.14';
+    this["VERSION"] = '0.16';
     if( window.apn$ ) return window.apn$;
 
     var UNDEFINED = 'undefined';
