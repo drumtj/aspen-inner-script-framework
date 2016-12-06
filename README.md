@@ -202,7 +202,9 @@
 >getLayer(layerTitle)
 
 >>//Layer container 형 Widget 에 대해서, 'layerTitle'을 Title 로 하는 Layer 의 ID 를 알아낸다.
+
 >>//이 ID 는 getWidget/getWidgets/checkWidgets() API 를 통하여 Layer 에 포함된 Widget 을 조회하기 위한 목적으로
+
 >>//사용되며 별도의 동작 기능을 가지고 있지 않다.
 
 >>@params (string)
