@@ -175,6 +175,17 @@
 >>@return self
 
 
+#####0.17 version 추가분######
+
+>zIndexTo(indexStr [, wait])
+
+>>//indexStr -> 'top'|'bottom'|'restore'
+
+>>@params (string, number)
+
+>>@return self
+
+
 
 ####option object
 
