@@ -28,9 +28,9 @@
 
 ##Methods
 
->attr(key [, value])
+>attr(key [, value] [, wait])
 
->>@params (string, *)
+>>@params (string, *, number)
 
 >>@return value or self
 
